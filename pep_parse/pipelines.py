@@ -23,7 +23,8 @@ class PepParsePipeline:
     def close_spider(self, spider):
         now = dt.datetime.now()
         now_format = now.strftime('%Y-%m-%d_%H-%M-%S')
-        filename = 'status_summary_{now_format}.csv'.format(now_format=now_format)
+        filename = 'status_summary_{now_format}.csv'.format(
+            now_format=now_format)
         file_path = self.result_dir / filename
         with open(file_path, 'w', encoding='utf-8') as f:
             csv_writer = csv.writer(
