@@ -6,11 +6,12 @@ from pathlib import Path
 
 
 BASE_DIR = Path(__file__).parent.parent
+RESULT_DIR = BASE_DIR / 'results'
 
 
 class PepParsePipeline:
     def __init__(self):
-        self.result_dir = BASE_DIR / 'results'
+        self.result_dir = RESULT_DIR
         self.result_dir.mkdir(exist_ok=True)
 
     def open_spider(self, spider):
