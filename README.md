@@ -19,7 +19,3 @@
 `pip install -r requirements.txt`
 4. Запустите парсер:  
 `scrapy crawl pep`
-
-## Автор
-
-Оксана Шеремет

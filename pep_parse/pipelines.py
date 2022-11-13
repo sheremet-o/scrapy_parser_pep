@@ -6,14 +6,11 @@ from pathlib import Path
 
 
 BASE_DIR = Path(__file__).parent.parent
-RESULT_DIR = BASE_DIR / 'results'
-
-FILENAME = 'status_summary_{now_format}.csv'
 
 
 class PepParsePipeline:
     def __init__(self):
-        self.result_dir = RESULT_DIR
+        self.result_dir = BASE_DIR / 'results'
         self.result_dir.mkdir(exist_ok=True)
 
     def open_spider(self, spider):
@@ -26,13 +23,17 @@ class PepParsePipeline:
     def close_spider(self, spider):
         now = dt.datetime.now()
         now_format = now.strftime('%Y-%m-%d_%H-%M-%S')
-        filename = FILENAME.format(now_format=now_format)
+        filename = 'status_summary_{now_format}.csv'.format(
+            now_format=now_format)
         file_path = self.result_dir / filename
         with open(file_path, 'w', encoding='utf-8') as f:
-            csv.writer(
+            csv_writer = csv.writer(
                 f,
                 dialect=csv.unix_dialect(),
-                quoting=csv.QUOTE_MINIMAL).writerows(
-                    [['Статус,Количество'],
-                     *self.statuses.items(),
-                     ['Total', sum(self.statuses.values())]])
+                quoting=csv.QUOTE_MINIMAL
+            )
+            csv_writer.writerows([
+                ['Статус,Количество'],
+                *self.statuses.items(),
+                ['Total', sum(self.statuses.values())]
+            ])
